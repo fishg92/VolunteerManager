@@ -1,0 +1,11 @@
+﻿<?xml version="1.0"?>
+<configuration>
+  <appSettings>
+    <add key="xCompassFrameworkConnectionString" value="data source=maryann;initial catalog=HAAH;user id=sa;password=northwoods"/>
+    <!--<add key="CompassFrameworkConnectionString" value="data source=maryann;initial catalog=HAAH;user id=sa;password=northwoods"/>-->
+
+    <add key="CompassFrameworkConnectionString" value="Server=tcp:xv4fxepxvf.database.windows.net,1433;Database=HAAH;User ID=fishg92;Password=Pulpheel321;Trusted_Connection=False;Connection Timeout=30"/>
+      <add key="ReportFolder" value="C:\cs\VolunteerManager\Reports"/>
+    <!--<add key="BypassSecurity" value="true"/>-->
+  </appSettings>
+<startup><supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.0"/></startup></configuration>

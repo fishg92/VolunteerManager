@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report DataSourceName="HAAH" Width="6.45833333333333in" Name="MonthSummary" xmlns="http://schemas.telerik.com/reporting/2012/2">
+  <DataSources>
+    <SqlDataSource ConnectionString="HAAH" SelectCommand="select * from haah.vw_Report" Name="HAAH" />
+  </DataSources>
+  <Items>
+    <PageHeaderSection Height="0.28125in" Name="pageHeader">
+      <Style Visible="False" />
+      <Items>
+        <TextBox Value="MonthSummary" Size="6.41666666666667in, 0.200000027815501in" Location="0.0208333333333333in, 0.0208333333333333in" Name="reportNameTextBox" StyleName="PageInfo" />
+      </Items>
+    </PageHeaderSection>
+    <PageFooterSection Height="0.612500111262004in" Name="pageFooter">
+      <Items>
+        <TextBox Value="=&quot;Report Date &quot; + NOW()" Size="3.19791666666667in, 0.199999729792277in" Location="0.0208333333333333in, 0.412500381469727in" Name="currentTimeTextBox" StyleName="PageInfo" />
+        <TextBox Value="=&quot;Page &quot; + PageNumber + &quot; of &quot; + PageCount" Size="3.19791666666667in, 0.200000027815501in" Location="3.23958325386047in, 0.412460645039876in" Name="pageInfoTextBox" StyleName="PageInfo">
+          <Style TextAlign="Right" />
+        </TextBox>
+      </Items>
+    </PageFooterSection>
+    <ReportHeaderSection Height="1.31874990463257in" Name="reportHeader">
+      <Items>
+        <TextBox Value="Hilliard Adopt-A-House" Size="6.4375in, 0.318750063578288in" Location="0in, 0in" Name="titleTextBox" StyleName="Title">
+          <Style TextAlign="Center" />
+        </TextBox>
+        <TextBox Value="=Fields.ProjectName" CanGrow="True" Size="3.19791666666667in, 0.299842258294423in" Location="1.63020833333333in, 0.318828821182251in" Name="projectNameDataTextBox" StyleName="Data">
+          <Style TextAlign="Center">
+            <Font Size="16pt" />
+          </Style>
+        </TextBox>
+        <TextBox Value="Volunteer Participation Statistics" Size="3.19791666666667in, 0.300000031789144in" Location="1.63020833333333in, 0.618749936421712in" Name="textBox1">
+          <Style TextAlign="Center">
+            <Font Size="14pt" />
+          </Style>
+        </TextBox>
+        <TextBox Value="= CStr(Min(Fields.WorkDate)) + &quot; through &quot; + CStr(Max(Fields.WorkDate))" Format="{0:d}" Size="5.50000063578288in, 0.300000031789144in" Location="0.5in, 0.918749988079071in" Name="textBox3">
+          <Style TextAlign="Center">
+            <Font Size="14pt" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportHeaderSection>
+    <ReportFooterSection Height="0.28125in" Name="reportFooter">
+      <Items>
+        <TextBox Value="= CountDistinct(Fields.pkVolunteer)" CanGrow="True" Size="1.36867109934489in, 0.200000032782555in" Location="2.53125in, 0.0416666666666667in" Name="textBox2" StyleName="Data">
+          <Style TextAlign="Right">
+            <BorderStyle Top="Solid" Bottom="None" Left="None" Right="None" />
+            <BorderColor Top="Black" Left="Black" Right="Black" />
+            <BorderWidth Top="1pt" Left="1pt" Right="1pt" />
+            <Font Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Value="= Sum(Fields.VolunteerHours)" CanGrow="True" Size="1.03749974568685in, 0.200000032782555in" Location="5.40000009536743in, 0.0416666666666667in" Name="textBox4" StyleName="Data">
+          <Style TextAlign="Right">
+            <BorderStyle Top="Solid" />
+            <BorderColor Top="Black" />
+            <BorderWidth Top="1pt" />
+            <Font Bold="True" />
+          </Style>
+        </TextBox>
+        <TextBox Value="= Count(Fields.WorkDate)" CanGrow="True" Size="1.49992179870605in, 0.200000032782555in" Location="3.89999985694885in, 0.0416666666666667in" Name="textBox5" StyleName="Data">
+          <Style TextAlign="Right">
+            <BorderStyle Top="Solid" />
+            <BorderColor Top="Black" />
+            <BorderWidth Top="1pt" />
+            <Font Bold="True" />
+          </Style>
+        </TextBox>
+      </Items>
+    </ReportFooterSection>
+    <DetailSection Height="0.28125in" Name="detail">
+      <Style Visible="False" />
+    </DetailSection>
+  </Items>
+  <StyleSheet>
+    <StyleRule>
+      <Style Color="Black">
+        <Font Name="Tahoma" Size="18pt" Bold="True" Italic="False" Underline="False" Strikeout="False" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="Title" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style Color="Black" VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="10pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="Caption" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="9pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="Data" />
+      </Selectors>
+    </StyleRule>
+    <StyleRule>
+      <Style VerticalAlign="Middle">
+        <Font Name="Tahoma" Size="8pt" />
+      </Style>
+      <Selectors>
+        <StyleSelector Type="ReportItemBase" StyleName="PageInfo" />
+      </Selectors>
+    </StyleRule>
+  </StyleSheet>
+  <PageSettings>
+    <PageSettings PaperKind="Letter">
+      <Margins>
+        <MarginsU Left="1in" Right="1in" Top="1in" Bottom="1in" />
+      </Margins>
+    </PageSettings>
+  </PageSettings>
+  <Filters>
+    <Filter Expression="=Fields.pkBuildProject" Operator="Equal" Value="=Parameters.Project.Value" />
+    <Filter Expression="=Fields.WorkDate" Operator="GreaterOrEqual" Value="=Parameters.StartDate.Value" />
+    <Filter Expression="=Fields.WorkDate" Operator="LessOrEqual" Value="=Parameters.EndDate.Value" />
+  </Filters>
+  <Groups>
+    <Group Name="labelsGroup">
+      <GroupHeader>
+        <GroupHeaderSection PrintOnEveryPage="True" Height="0.481250047683716in" Name="labelsGroupHeader">
+          <Items>
+            <TextBox Value="Organization Name" CanGrow="True" Size="2.47908782958984in, 0.460416714350383in" Location="0.0208333333333333in, 0.0208333333333333in" Name="organizationNameCaptionTextBox" StyleName="Caption" />
+            <TextBox Value="Volunteers" CanGrow="True" Size="1.39992109934489in, 0.460377295811971in" Location="2.5in, 0.0208333333333333in" Name="pkVolunteerCaptionTextBox" StyleName="Caption">
+              <Style TextAlign="Right" VerticalAlign="Bottom">
+                <Font Bold="True" Underline="True" />
+              </Style>
+            </TextBox>
+            <TextBox Value="Volunteer Experiences" CanGrow="True" Size="1.49992148081462in, 0.46033787727356in" Location="3.89999993642171in, 0.0208333333333333in" Name="workDateCaptionTextBox" StyleName="Caption">
+              <Style TextAlign="Right" VerticalAlign="Bottom">
+                <Font Bold="True" Underline="True" />
+              </Style>
+            </TextBox>
+            <TextBox Value="Hours" CanGrow="True" Size="1.03749974568685in, 0.46033787727356in" Location="5.40000025431315in, 0.0208333333333333in" Name="volunteerHoursCaptionTextBox" StyleName="Caption">
+              <Style TextAlign="Right" VerticalAlign="Bottom">
+                <Font Bold="True" Underline="True" />
+              </Style>
+            </TextBox>
+          </Items>
+        </GroupHeaderSection>
+      </GroupHeader>
+      <GroupFooter>
+        <GroupFooterSection Height="0.28125in" Name="labelsGroupFooter">
+          <Style Visible="False" />
+        </GroupFooterSection>
+      </GroupFooter>
+    </Group>
+    <Group Name="organizationNameGroup">
+      <Groupings>
+        <Grouping Expression="=Fields.OrganizationName" />
+      </Groupings>
+      <GroupHeader>
+        <GroupHeaderSection Height="0.28125in" Name="organizationNameGroupHeader">
+          <Items>
+            <TextBox Value="=Fields.OrganizationName" CanGrow="True" Size="2.47908782958984in, 0.200000027815501in" Location="0.0208333333333333in, 0.0208333333333333in" Name="organizationNameDataTextBox" StyleName="Data" />
+            <TextBox Value="= CountDistinct(Fields.pkVolunteer)" CanGrow="True" Size="1.39992109934489in, 0.200000027815501in" Location="2.5in, 0.00003941853841146in" Name="pkVolunteerDataTextBox" StyleName="Data">
+              <Style TextAlign="Right" />
+            </TextBox>
+            <TextBox Value="= Count(Fields.WorkDate)" CanGrow="True" Size="1.49992148081462in, 0.200000027815501in" Location="3.89999993642171in, 0in" Name="workDateDataTextBox" StyleName="Data">
+              <Style TextAlign="Right" />
+            </TextBox>
+            <TextBox Value="= Sum(Fields.VolunteerHours)" CanGrow="True" Size="1.03749974568685in, 0.200000027815501in" Location="5.40000025431315in, 0in" Name="volunteerHoursDataTextBox" StyleName="Data">
+              <Style TextAlign="Right" />
+            </TextBox>
+          </Items>
+        </GroupHeaderSection>
+      </GroupHeader>
+      <GroupFooter>
+        <GroupFooterSection Height="0.28125in" Name="organizationNameGroupFooter">
+          <Style Visible="False" />
+        </GroupFooterSection>
+      </GroupFooter>
+    </Group>
+  </Groups>
+  <ReportParameters>
+    <ReportParameter Name="Project" Type="Integer" Text="Select a project" Visible="True" AllowBlank="False">
+      <AvailableValues DataSourceName="HAAH" DisplayMember="= Fields.ProjectName" ValueMember="= Fields.pkBuildProject">
+        <Sortings>
+          <Sorting Expression="=Fields.pkBuildProject" Direction="Asc" />
+        </Sortings>
+      </AvailableValues>
+      <Value>
+        <String>15</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="StartDate" Type="DateTime" Visible="True" AllowBlank="False">
+      <Value>
+        <String>="11/1/2012"</String>
+      </Value>
+    </ReportParameter>
+    <ReportParameter Name="EndDate" Type="DateTime" Visible="True" AllowBlank="False">
+      <Value>
+        <String>="12/1/2012"</String>
+      </Value>
+    </ReportParameter>
+  </ReportParameters>
+</Report>
