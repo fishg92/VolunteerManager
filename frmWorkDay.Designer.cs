@@ -87,7 +87,7 @@
             // 
             // cboProject
             // 
-            this.cboProject.DisplayMember = "ItemDisplay";
+            this.cboProject.DisplayMember = "ProjectName";
             this.cboProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProject.Enabled = false;
             this.cboProject.FormattingEnabled = true;
@@ -96,7 +96,7 @@
             this.cboProject.Size = new System.Drawing.Size(248, 21);
             this.cboProject.TabIndex = 0;
             this.cboProject.TabStop = false;
-            this.cboProject.ValueMember = "ItemValue";
+            this.cboProject.ValueMember = "pkBuildProject";
             // 
             // lblProject
             // 
@@ -178,19 +178,19 @@
             this.mnuAddSelectedVolunteers,
             this.mnuEditVolunteer});
             this.cmVolunteerAvailable.Name = "cmVolunteerAvailable";
-            this.cmVolunteerAvailable.Size = new System.Drawing.Size(262, 48);
+            this.cmVolunteerAvailable.Size = new System.Drawing.Size(266, 48);
             // 
             // mnuAddSelectedVolunteers
             // 
             this.mnuAddSelectedVolunteers.Name = "mnuAddSelectedVolunteers";
-            this.mnuAddSelectedVolunteers.Size = new System.Drawing.Size(261, 22);
+            this.mnuAddSelectedVolunteers.Size = new System.Drawing.Size(265, 22);
             this.mnuAddSelectedVolunteers.Text = "Add selected volunteers to work day";
             this.mnuAddSelectedVolunteers.Click += new System.EventHandler(this.mnuAddSelectedVolunteers_Click);
             // 
             // mnuEditVolunteer
             // 
             this.mnuEditVolunteer.Name = "mnuEditVolunteer";
-            this.mnuEditVolunteer.Size = new System.Drawing.Size(261, 22);
+            this.mnuEditVolunteer.Size = new System.Drawing.Size(265, 22);
             this.mnuEditVolunteer.Text = "Edit volunteer";
             this.mnuEditVolunteer.Click += new System.EventHandler(this.mnuEditVolunteer_Click);
             // 
@@ -353,26 +353,26 @@
             this.mnuRemoveVolunteer,
             this.mnuEditVolunteerSelected});
             this.cmVolunteerSelected.Name = "cmVolunteerSelected";
-            this.cmVolunteerSelected.Size = new System.Drawing.Size(294, 70);
+            this.cmVolunteerSelected.Size = new System.Drawing.Size(302, 70);
             // 
             // mnuMultiSetTime
             // 
             this.mnuMultiSetTime.Name = "mnuMultiSetTime";
-            this.mnuMultiSetTime.Size = new System.Drawing.Size(293, 22);
+            this.mnuMultiSetTime.Size = new System.Drawing.Size(301, 22);
             this.mnuMultiSetTime.Text = "Set actual times for selected volunteers";
             this.mnuMultiSetTime.Click += new System.EventHandler(this.mnuMultiSetTime_Click);
             // 
             // mnuRemoveVolunteer
             // 
             this.mnuRemoveVolunteer.Name = "mnuRemoveVolunteer";
-            this.mnuRemoveVolunteer.Size = new System.Drawing.Size(293, 22);
+            this.mnuRemoveVolunteer.Size = new System.Drawing.Size(301, 22);
             this.mnuRemoveVolunteer.Text = "Remove selected volunteers from work day";
             this.mnuRemoveVolunteer.Click += new System.EventHandler(this.mnuRemoveVolunteer_Click);
             // 
             // mnuEditVolunteerSelected
             // 
             this.mnuEditVolunteerSelected.Name = "mnuEditVolunteerSelected";
-            this.mnuEditVolunteerSelected.Size = new System.Drawing.Size(293, 22);
+            this.mnuEditVolunteerSelected.Size = new System.Drawing.Size(301, 22);
             this.mnuEditVolunteerSelected.Text = "Edit volunteer";
             this.mnuEditVolunteerSelected.Click += new System.EventHandler(this.mnuEditVolunteerSelected_Click);
             // 

@@ -21,14 +21,14 @@ namespace VolunteerManager
 
         private void FillProjectList()
         {
-            cboProject.DataSource = VmData.ProjectList().Tables[0];
+            cboProject.DataSource = VmData.ProjectList(false);
             cboProject.SelectedIndex = 0;
         }
 
         private void cboProject_SelectedIndexChanged(object sender, EventArgs e)
         {
             decimal totalHours;
-            DataSet ds = VmData.GetWorkDays((int)cboProject.SelectedValue, out totalHours);
+            DataSet ds = VmData.GetWorkDays(Convert.ToInt32(cboProject.SelectedValue), out totalHours);
             dgvWorkDay.DataSource=ds.Tables[0];
             lblTotalProjectHours.Text = "Total Project Hours: " + totalHours.ToString("#,##0.00");
         }

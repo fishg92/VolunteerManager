@@ -59,7 +59,7 @@ namespace VolunteerManager
 
         private void FillProjectList()
         {
-            cboProject.DataSource = CommonFunctions.ComboItemList(VmData.ProjectList(), "pkBuildProject", "ProjectName");
+            cboProject.DataSource = VmData.ProjectList(false);
         }
 
         private void FillOrganizationList()
@@ -184,7 +184,7 @@ namespace VolunteerManager
             frmVolunteer fVol = new frmVolunteer(-1);
             if (cboOrganization.SelectedIndex > 0)
             {
-                fVol.setPkOrganization(CommonFunctions.ComboBoxSelectedIntValue(cboOrganization));
+                fVol.SetPkOrganization(CommonFunctions.ComboBoxSelectedIntValue(cboOrganization));
             }
 
             if (fVol.ShowDialog() == DialogResult.OK)
@@ -194,7 +194,7 @@ namespace VolunteerManager
                     _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, (int)cboProject.SelectedValue, WorkDate, "", "", LunchfkOrganization);
                 }
 
-                VmData.AddVolunteerWorkDay(_pkWorkDay, fVol.pkVolunteer);
+                VmData.AddVolunteerWorkDay(_pkWorkDay, fVol.PkVolunteer);
 
                 FillAvailableVolunteerList();
                 FillSelectedVolunteerList();

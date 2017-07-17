@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using DataInterface;
 using System.Data;
 
@@ -10,13 +8,13 @@ namespace VolunteerManager
 {
     public class VmData
     {
-        public static void SetActualHours(int pkVolunteer, int pkWorkDay, DateTime ActualStartTime, DateTime ActualEndTime)
+        public static void SetActualHours(int pkVolunteer, int pkWorkDay, DateTime actualStartTime, DateTime actualEndTime)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.SetActualHours");
             sp.AddInputParameter("@fkWorkDay", pkWorkDay);
             sp.AddInputParameter("@fkVolunteer", pkVolunteer);
-            sp.AddInputParameter("@ActualStartTime", ActualStartTime);
-            sp.AddInputParameter("@ActualEndTime", ActualEndTime);
+            sp.AddInputParameter("@ActualStartTime", actualStartTime);
+            sp.AddInputParameter("@ActualEndTime", actualEndTime);
             sp.ExecNonQuery();
         }
         public static void GetVolunteerData(
@@ -118,10 +116,10 @@ namespace VolunteerManager
 
         }
 
-        public static DataSet OrganizationList(bool AddBlank, string blankName)
+        public static DataSet OrganizationList(bool addBlank, string blankName)
         {
             string sql = "select pkOrganization, OrganizationName, ShortName from haah.Organization";
-            if (AddBlank)
+            if (addBlank)
                 sql += " union select -1,'" + blankName + "',''";
 
             sql += " order by OrganizationName";
@@ -138,11 +136,25 @@ namespace VolunteerManager
             return DBInterface.GetDSfromSQL(config.ConnectionString, sql);
         }
 
-        public static DataSet ProjectList()
+        public static List<BuildProject> ProjectList(bool includeAll)
         {
             string sql = "select pkBuildProject, ProjectName = ProjectName + ' (' + convert(varchar,datepart(year,StartDate)) + ')' " +
             "from haah.BuildProject order by StartDate desc";
-            return DBInterface.GetDSfromSQL(config.ConnectionString, sql);
+
+            List<BuildProject> retList = new List<BuildProject>();
+
+            DataSet dsProject = DBInterface.GetDSfromSQL(config.ConnectionString, sql);
+
+            foreach (DataRow dr in dsProject.Tables[0].Rows)
+            {
+                retList.Add(new BuildProject {pkBuildProject = Convert.ToDecimal(dr["pkBuildProject"]),ProjectName = dr["ProjectName"].ToString()});
+            }
+
+            if (includeAll)
+            {
+                retList.Insert(0,new BuildProject {pkBuildProject = -1,ProjectName = "All"});
+            }
+            return retList;
         }
 
         public static void AddVolunteerWorkDay(int pkWorkDay, int pkVolunteer)
@@ -214,7 +226,7 @@ namespace VolunteerManager
             , DateTime workDate
             , string workDescription
             , string comments
-            , int LunchfkOrganization)
+            , int lunchfkOrganization)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.WorkDaySave");
             sp.AddInputParameter("@pkWorkDay", pkWorkDay);
@@ -222,7 +234,7 @@ namespace VolunteerManager
             sp.AddInputParameter("@WorkDate", workDate);
             sp.AddInputParameter("@workDescription", workDescription);
             sp.AddInputParameter("@Comments", comments);
-            sp.AddInputParameter("@LunchfkOrganization", LunchfkOrganization);
+            sp.AddInputParameter("@LunchfkOrganization", lunchfkOrganization);
             sp.AddOutputParameter("@pkWorkDayReturn", SqlDbType.Int);
             sp.ExecNonQuery();
             return sp.OutputParameterValueInt("@pkWorkDayReturn", -1);
@@ -266,16 +278,16 @@ namespace VolunteerManager
         }
 
 
-        public static DataSet GetWorkDays(int pkBuildProject, out decimal TotalProjectHours)
+        public static DataSet GetWorkDays(int pkBuildProject, out decimal totalProjectHours)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.GetWorkDays");
             sp.AddInputParameter("@fkBuildProject", pkBuildProject);
             DataSet ds = sp.GetDsResult();
 
-            TotalProjectHours = 0;
+            totalProjectHours = 0;
             foreach (DataRow dr in ds.Tables[0].Rows)
             {
-                TotalProjectHours += (decimal)dr["TotalHours"];
+                totalProjectHours += (decimal)dr["TotalHours"];
             }
 
             return ds;
@@ -284,10 +296,10 @@ namespace VolunteerManager
         public static void GetWorkDayDetails(
             int pkWorkDay
             , out int fkBuildProject
-            , out DateTime WorkDate
-            , out string WorkDescription
-            , out string Comments
-            , out int LunchfkOrganization)
+            , out DateTime workDate
+            , out string workDescription
+            , out string comments
+            , out int lunchfkOrganization)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.GetWorkDayDetails");
             sp.AddInputParameter("@pkWorkDay", pkWorkDay);
@@ -299,24 +311,24 @@ namespace VolunteerManager
 
             sp.ExecNonQuery();
             fkBuildProject = sp.OutputParameterValueInt("@fkBuildProject", -1);
-            WorkDate = sp.OutputParameterValueDateTime("@WorkDate", DateTime.MinValue);
-            WorkDescription = sp.OutputParameterValueString("@WorkDescription", "");
-            Comments = sp.OutputParameterValueString("@Comments", "");
-            LunchfkOrganization = sp.OutputParameterValueInt("@LunchfkOrganization", -1);
+            workDate = sp.OutputParameterValueDateTime("@WorkDate", DateTime.MinValue);
+            workDescription = sp.OutputParameterValueString("@WorkDescription", "");
+            comments = sp.OutputParameterValueString("@Comments", "");
+            lunchfkOrganization = sp.OutputParameterValueInt("@LunchfkOrganization", -1);
         }
 
         public static void GetVolunteerWorkDay(
             int pkVolunteer
             , int pkWorkDay
-            , out DateTime ActualStartTime
-            , out DateTime ActualEndTime
-            , out DateTime ProjectedStartTime
-            , out DateTime ProjectedEndTime
-            , out string Comments
-            , out bool NoShow
-            , out DateTime BaseDate
-            , out string VolunteerName
-            , out string OrganizationName)
+            , out DateTime actualStartTime
+            , out DateTime actualEndTime
+            , out DateTime projectedStartTime
+            , out DateTime projectedEndTime
+            , out string comments
+            , out bool noShow
+            , out DateTime baseDate
+            , out string volunteerName
+            , out string organizationName)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.GetVolunteerWorkDay");
             sp.AddInputParameter("@pkVolunteer", pkVolunteer);
@@ -333,41 +345,41 @@ namespace VolunteerManager
 
             sp.ExecNonQuery();
 
-            ActualStartTime = sp.OutputParameterValueDateTime("@ActualStartTime", DateTime.MinValue);
-            ActualEndTime = sp.OutputParameterValueDateTime("@ActualEndTime", DateTime.MinValue);
-            ProjectedStartTime = sp.OutputParameterValueDateTime("@ProjectedStartTime", DateTime.MinValue);
-            ProjectedEndTime = sp.OutputParameterValueDateTime("@ProjectedEndTime", DateTime.MinValue);
-            Comments = sp.OutputParameterValueString("@Comments", "");
-            NoShow = (sp.OutputParameterValueString("@NoShow", "") == "True");
-            BaseDate = sp.OutputParameterValueDateTime("@BaseDate", DateTime.MinValue);
-            VolunteerName = sp.OutputParameterValueString("@VolunteerName", "");
-            OrganizationName = sp.OutputParameterValueString("@OrganizationName", "");
+            actualStartTime = sp.OutputParameterValueDateTime("@ActualStartTime", DateTime.MinValue);
+            actualEndTime = sp.OutputParameterValueDateTime("@ActualEndTime", DateTime.MinValue);
+            projectedStartTime = sp.OutputParameterValueDateTime("@ProjectedStartTime", DateTime.MinValue);
+            projectedEndTime = sp.OutputParameterValueDateTime("@ProjectedEndTime", DateTime.MinValue);
+            comments = sp.OutputParameterValueString("@Comments", "");
+            noShow = (sp.OutputParameterValueString("@NoShow", "") == "True");
+            baseDate = sp.OutputParameterValueDateTime("@BaseDate", DateTime.MinValue);
+            volunteerName = sp.OutputParameterValueString("@VolunteerName", "");
+            organizationName = sp.OutputParameterValueString("@OrganizationName", "");
         }
 
         public static void SaveVolunteerWorkDay(
             int pkWorkDay
             , int pkVolunteer
-            , DateTime ProjectedStartTime
-            , DateTime ProjectedEndTime
-            , DateTime ActualStartTime
-            , DateTime ActualEndTime
-            , string Comments
-            , bool NoShow)
+            , DateTime projectedStartTime
+            , DateTime projectedEndTime
+            , DateTime actualStartTime
+            , DateTime actualEndTime
+            , string comments
+            , bool noShow)
         {
 
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.VolunteerWorkDaySave");
             sp.AddInputParameter("@fkWorkDay", pkWorkDay);
             sp.AddInputParameter("@fkVolunteer", pkVolunteer);
-            if (ActualStartTime != DateTime.MinValue)
-                sp.AddInputParameter("@ActualStartTime", ActualStartTime);
-            if (ActualEndTime != DateTime.MinValue)
-                sp.AddInputParameter("@ActualEndTime", ActualEndTime);
-            if (ProjectedStartTime != DateTime.MinValue)
-                sp.AddInputParameter("@ProjectedStartTime", ProjectedStartTime);
-            if (ProjectedEndTime != DateTime.MinValue)
-                sp.AddInputParameter("@ProjectedEndTime", ProjectedEndTime);
-            sp.AddInputParameter("@Comments", Comments);
-            sp.AddInputParameter("@NoShow", NoShow);
+            if (actualStartTime != DateTime.MinValue)
+                sp.AddInputParameter("@ActualStartTime", actualStartTime);
+            if (actualEndTime != DateTime.MinValue)
+                sp.AddInputParameter("@ActualEndTime", actualEndTime);
+            if (projectedStartTime != DateTime.MinValue)
+                sp.AddInputParameter("@ProjectedStartTime", projectedStartTime);
+            if (projectedEndTime != DateTime.MinValue)
+                sp.AddInputParameter("@ProjectedEndTime", projectedEndTime);
+            sp.AddInputParameter("@Comments", comments);
+            sp.AddInputParameter("@NoShow", noShow);
             sp.ExecNonQuery();
 
         }
@@ -379,21 +391,21 @@ namespace VolunteerManager
             sp.ExecNonQuery();
         }
 
-        public static int DuplicateWorkDayExists(int pkWorkDay, DateTime WorkDate)
+        public static int DuplicateWorkDayExists(int pkWorkDay, DateTime workDate)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.DuplicateWorkDayExists");
             sp.AddInputParameter("@pkWorkDay", pkWorkDay);
-            sp.AddInputParameter("@WorkDate", WorkDate);
+            sp.AddInputParameter("@WorkDate", workDate);
             return sp.ScalarInteger(-1);
         }
 
-        public static DataSet VolunteerList(int pkOrganization, int pkBuildProject, bool ActiveOnly)
+        public static DataSet VolunteerList(int pkOrganization, int pkBuildProject, bool activeOnly)
         {
 
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.VolunteerList");
             sp.AddInputParameter("@pkOrganization", pkOrganization);
             sp.AddInputParameter("@pkBuildProject", pkBuildProject);
-            sp.AddInputParameter("@ActiveOnly", ActiveOnly);
+            sp.AddInputParameter("@ActiveOnly", activeOnly);
 
             return sp.GetDsResult();
 
@@ -401,9 +413,9 @@ namespace VolunteerManager
 
         public static void VolunteerHourSummary(
             int pkVolunteer
-            , out int ProjectCount
-            , out int WorkDayCount
-            , out decimal TotalHours)
+            , out int projectCount
+            , out int workDayCount
+            , out decimal totalHours)
         {
             SQLStoredProc sp = new SQLStoredProc(config.ConnectionString, "haah.VolunteerHourSummary");
             sp.AddInputParameter("@pkVolunteer", pkVolunteer);
@@ -411,9 +423,9 @@ namespace VolunteerManager
             sp.AddOutputParameter("@WorkDayCount", SqlDbType.Int);
             sp.AddOutputParameter("@TotalHours", SqlDbType.Decimal);
             sp.ExecNonQuery();
-            ProjectCount = sp.OutputParameterValueInt("@ProjectCount", 0);
-            WorkDayCount = sp.OutputParameterValueInt("@WorkDayCount", 0);
-            TotalHours = sp.OutputParameterValueDecimal("@TotalHours", 0);
+            projectCount = sp.OutputParameterValueInt("@ProjectCount", 0);
+            workDayCount = sp.OutputParameterValueInt("@WorkDayCount", 0);
+            totalHours = sp.OutputParameterValueDecimal("@TotalHours", 0);
         }
 
 

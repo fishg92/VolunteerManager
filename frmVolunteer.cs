@@ -11,12 +11,12 @@ namespace VolunteerManager
         {
             InitializeComponent();
             FillCombos();
-            pkVolunteer = ppkVolunteer;
+            PkVolunteer = ppkVolunteer;
             if (ppkVolunteer != -1)
                 FillData();
         }
 
-        public void setPkOrganization(int ppkOrganization)
+        public void SetPkOrganization(int ppkOrganization)
         {
             if (ppkOrganization != -1)
             {
@@ -104,7 +104,7 @@ namespace VolunteerManager
             if (ValidateData())
             {
                 _pkVolunteer = VmData.SaveVolunteer(
-                    pkVolunteer
+                    PkVolunteer
                     , txtFirstName.Text.Trim()
                     , txtLastName.Text.Trim()
                     , txtAddress.Text.Trim()
@@ -166,7 +166,7 @@ namespace VolunteerManager
             cboPositionType.DataSource = CommonFunctions.ComboItemList(VmData.PositionTypeList(true), "pkrefPositionType", "Description");
         }
 
-        public int pkVolunteer
+        public int PkVolunteer
         {
             get
             {

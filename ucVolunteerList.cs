@@ -10,12 +10,19 @@ namespace VolunteerManager
             InitializeComponent();
             FillOrganizations();
             cboOrganization.SelectedIndex = 0;
+            FillProjects();
+            cboProject.SelectedIndex = 0;
             FillData();
         }
 
         private void FillOrganizations()
         {
             cboOrganization.DataSource = VmData.OrganizationList(true,"All").Tables[0];
+        }
+
+        private void FillProjects()
+        {
+            cboProject.DataSource = VmData.ProjectList(true);
         }
 
         public void FillData()
@@ -145,6 +152,11 @@ namespace VolunteerManager
         private void chkActive_CheckedChanged(object sender, EventArgs e)
         {
             FillData();
+        }
+
+        private void chkDateFilter_CheckedChanged(object sender, EventArgs e)
+        {
+            gbxDateRange.Visible = chkDateFilter.Checked;
         }
     }
 }

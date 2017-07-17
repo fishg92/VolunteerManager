@@ -4,31 +4,18 @@ namespace VolunteerManager
 {
     class TimeComboValueItem
     {
-        private DateTime _dateValue;
-
         public TimeComboValueItem(DateTime pDate)
         {
             DateValue = pDate;
         }
 
-        public DateTime DateValue
-        {
-            get
-            {
-                return _dateValue;
-            }
-            set
-            {
-                _dateValue = value;
-            }
-        }
+        public DateTime DateValue { get; set; }
 
         public string DisplayValue
         {
             get
             {
-                string retVal;
-                int hour = _dateValue.Hour;
+                int hour = DateValue.Hour;
                 string ampm;
 
                 if (hour > 11)
@@ -43,7 +30,7 @@ namespace VolunteerManager
                     ampm = "AM";
                 }
 
-                retVal = hour.ToString("00") + ":" + _dateValue.Minute.ToString("00") + " " + ampm;
+                var retVal = hour.ToString("00") + ":" + DateValue.Minute.ToString("00") + " " + ampm;
                 return retVal;
             }
         }

@@ -2,48 +2,18 @@
 
 namespace VolunteerManager
 {
-    class myListItem
+    class MyListItem:IListItem
     {
-        private string _ItemValue;
-        private string _ItemDisplay;
-
-        public myListItem(string pItemValue, string pItemDisplay)
+        public MyListItem(string pItemValue, string pItemDisplay)
         {
-            _ItemValue = pItemValue;
-            _ItemDisplay = pItemDisplay;
+            ItemValue = pItemValue;
+            ItemDisplay = pItemDisplay;
         }
 
-        public string ItemValue
-        {
-            get
-            {
-                return _ItemValue;
-            }
-            set
-            {
-                _ItemValue = value;
-            }
-        }
+        public string ItemValue { get; set; }
 
-        public string ItemDisplay
-        {
-            get
-            {
-                return _ItemDisplay;
-            }
-            set
-            {
-                _ItemDisplay = value;
-            }
-        }
+        public string ItemDisplay { get; set; }
 
-        public int ItemValueInt
-        {
-            get
-            {
-                return Convert.ToInt32(_ItemValue);
-            }
-        }
-
+        public int ItemValueInt => Convert.ToInt32(ItemValue);
     }
 }

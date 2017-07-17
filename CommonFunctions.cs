@@ -8,13 +8,13 @@ namespace VolunteerManager
     class CommonFunctions
     {
 
-        public static List<myListItem> ComboItemList(DataSet ds, string valueColumnName, string displayColumnName)
+        public static List<MyListItem> ComboItemList(DataSet ds, string valueColumnName, string displayColumnName)
         { 
-            List<myListItem> retList = new List<myListItem>();
+            List<MyListItem> retList = new List<MyListItem>();
 
             foreach(DataRow dr in ds.Tables[0].Rows)
             {
-                myListItem itm = new myListItem(dr[valueColumnName].ToString(),dr[displayColumnName].ToString());
+                MyListItem itm = new MyListItem(dr[valueColumnName].ToString(),dr[displayColumnName].ToString());
                 retList.Add(itm);
             }
             return retList;
@@ -24,7 +24,7 @@ namespace VolunteerManager
         {
             for (int index = 0; index < cbo.Items.Count;index++ )
             {
-                myListItem myItem = (myListItem)cbo.Items[index];
+                IListItem myItem = (IListItem)cbo.Items[index];
                 if (myItem.ItemValueInt == value)
                 {
                     cbo.SelectedIndex = index;
@@ -39,7 +39,7 @@ namespace VolunteerManager
             {
                 return -1;
             }
-            myListItem myItem = (myListItem)cbo.Items[cbo.SelectedIndex];
+            MyListItem myItem = (MyListItem)cbo.Items[cbo.SelectedIndex];
             return myItem.ItemValueInt;
         }
 

@@ -52,8 +52,17 @@
             this.mnuEditVolunteer = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDeleteVolunteer = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCombineVolunteers = new System.Windows.Forms.ToolStripMenuItem();
+            this.cboProject = new System.Windows.Forms.ComboBox();
+            this.lblProject = new System.Windows.Forms.Label();
+            this.dtpStart = new System.Windows.Forms.DateTimePicker();
+            this.chkDateFilter = new System.Windows.Forms.CheckBox();
+            this.gbxDateRange = new System.Windows.Forms.GroupBox();
+            this.lblStartDate = new System.Windows.Forms.Label();
+            this.lblEndDate = new System.Windows.Forms.Label();
+            this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVolunteer)).BeginInit();
             this.cmVolunteer.SuspendLayout();
+            this.gbxDateRange.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblTitle
@@ -73,7 +82,7 @@
             this.cboOrganization.FormattingEnabled = true;
             this.cboOrganization.Location = new System.Drawing.Point(102, 37);
             this.cboOrganization.Name = "cboOrganization";
-            this.cboOrganization.Size = new System.Drawing.Size(275, 21);
+            this.cboOrganization.Size = new System.Drawing.Size(231, 21);
             this.cboOrganization.TabIndex = 1;
             this.cboOrganization.ValueMember = "pkOrganization";
             this.cboOrganization.SelectedIndexChanged += new System.EventHandler(this.cboOrganization_SelectedIndexChanged);
@@ -92,7 +101,7 @@
             this.chkActive.AutoSize = true;
             this.chkActive.Checked = true;
             this.chkActive.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkActive.Location = new System.Drawing.Point(426, 39);
+            this.chkActive.Location = new System.Drawing.Point(367, 39);
             this.chkActive.Name = "chkActive";
             this.chkActive.Size = new System.Drawing.Size(159, 17);
             this.chkActive.TabIndex = 3;
@@ -127,12 +136,12 @@
             this.colLastVolunteerDate,
             this.colProjectHours});
             this.dgvVolunteer.ContextMenuStrip = this.cmVolunteer;
-            this.dgvVolunteer.Location = new System.Drawing.Point(13, 64);
+            this.dgvVolunteer.Location = new System.Drawing.Point(13, 88);
             this.dgvVolunteer.Name = "dgvVolunteer";
             this.dgvVolunteer.ReadOnly = true;
             this.dgvVolunteer.RowHeadersVisible = false;
             this.dgvVolunteer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvVolunteer.Size = new System.Drawing.Size(870, 373);
+            this.dgvVolunteer.Size = new System.Drawing.Size(870, 349);
             this.dgvVolunteer.TabIndex = 4;
             this.dgvVolunteer.SelectionChanged += new System.EventHandler(this.dgvVolunteer_SelectionChanged);
             this.dgvVolunteer.DoubleClick += new System.EventHandler(this.dgvVolunteer_DoubleClick);
@@ -240,40 +249,123 @@
             this.mnuDeleteVolunteer,
             this.mnuCombineVolunteers});
             this.cmVolunteer.Name = "cmVolunteer";
-            this.cmVolunteer.Size = new System.Drawing.Size(223, 92);
+            this.cmVolunteer.Size = new System.Drawing.Size(222, 92);
             // 
             // mnuAddVolunteer
             // 
             this.mnuAddVolunteer.Name = "mnuAddVolunteer";
-            this.mnuAddVolunteer.Size = new System.Drawing.Size(222, 22);
+            this.mnuAddVolunteer.Size = new System.Drawing.Size(221, 22);
             this.mnuAddVolunteer.Text = "Add New Volunteer";
             this.mnuAddVolunteer.Click += new System.EventHandler(this.mnuAddVolunteer_Click);
             // 
             // mnuEditVolunteer
             // 
             this.mnuEditVolunteer.Name = "mnuEditVolunteer";
-            this.mnuEditVolunteer.Size = new System.Drawing.Size(222, 22);
+            this.mnuEditVolunteer.Size = new System.Drawing.Size(221, 22);
             this.mnuEditVolunteer.Text = "Edit Volunteer";
             this.mnuEditVolunteer.Click += new System.EventHandler(this.mnuEditVolunteer_Click);
             // 
             // mnuDeleteVolunteer
             // 
             this.mnuDeleteVolunteer.Name = "mnuDeleteVolunteer";
-            this.mnuDeleteVolunteer.Size = new System.Drawing.Size(222, 22);
+            this.mnuDeleteVolunteer.Size = new System.Drawing.Size(221, 22);
             this.mnuDeleteVolunteer.Text = "Delete Volunteer";
             this.mnuDeleteVolunteer.Click += new System.EventHandler(this.mnuDeleteVolunteer_Click);
             // 
             // mnuCombineVolunteers
             // 
             this.mnuCombineVolunteers.Name = "mnuCombineVolunteers";
-            this.mnuCombineVolunteers.Size = new System.Drawing.Size(222, 22);
+            this.mnuCombineVolunteers.Size = new System.Drawing.Size(221, 22);
             this.mnuCombineVolunteers.Text = "Combine Volunteer Records";
             this.mnuCombineVolunteers.Click += new System.EventHandler(this.mnuCombineVolunteers_Click);
+            // 
+            // cboProject
+            // 
+            this.cboProject.DisplayMember = "ProjectName";
+            this.cboProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboProject.FormattingEnabled = true;
+            this.cboProject.Location = new System.Drawing.Point(102, 9);
+            this.cboProject.Name = "cboProject";
+            this.cboProject.Size = new System.Drawing.Size(231, 21);
+            this.cboProject.TabIndex = 5;
+            this.cboProject.ValueMember = "pkBuildProject";
+            // 
+            // lblProject
+            // 
+            this.lblProject.AutoSize = true;
+            this.lblProject.Location = new System.Drawing.Point(30, 12);
+            this.lblProject.Name = "lblProject";
+            this.lblProject.Size = new System.Drawing.Size(40, 13);
+            this.lblProject.TabIndex = 6;
+            this.lblProject.Text = "Project";
+            // 
+            // dtpStart
+            // 
+            this.dtpStart.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpStart.Location = new System.Drawing.Point(80, 19);
+            this.dtpStart.Name = "dtpStart";
+            this.dtpStart.Size = new System.Drawing.Size(103, 20);
+            this.dtpStart.TabIndex = 7;
+            // 
+            // chkDateFilter
+            // 
+            this.chkDateFilter.AutoSize = true;
+            this.chkDateFilter.Location = new System.Drawing.Point(536, 11);
+            this.chkDateFilter.Name = "chkDateFilter";
+            this.chkDateFilter.Size = new System.Drawing.Size(116, 17);
+            this.chkDateFilter.TabIndex = 8;
+            this.chkDateFilter.Text = "Filter by date range";
+            this.chkDateFilter.UseVisualStyleBackColor = true;
+            this.chkDateFilter.CheckedChanged += new System.EventHandler(this.chkDateFilter_CheckedChanged);
+            // 
+            // gbxDateRange
+            // 
+            this.gbxDateRange.Controls.Add(this.lblEndDate);
+            this.gbxDateRange.Controls.Add(this.dtpEnd);
+            this.gbxDateRange.Controls.Add(this.lblStartDate);
+            this.gbxDateRange.Controls.Add(this.dtpStart);
+            this.gbxDateRange.Location = new System.Drawing.Point(658, 6);
+            this.gbxDateRange.Name = "gbxDateRange";
+            this.gbxDateRange.Size = new System.Drawing.Size(189, 76);
+            this.gbxDateRange.TabIndex = 9;
+            this.gbxDateRange.TabStop = false;
+            this.gbxDateRange.Text = "Date Range";
+            this.gbxDateRange.Visible = false;
+            // 
+            // lblStartDate
+            // 
+            this.lblStartDate.AutoSize = true;
+            this.lblStartDate.Location = new System.Drawing.Point(32, 25);
+            this.lblStartDate.Name = "lblStartDate";
+            this.lblStartDate.Size = new System.Drawing.Size(29, 13);
+            this.lblStartDate.TabIndex = 8;
+            this.lblStartDate.Text = "Start";
+            // 
+            // lblEndDate
+            // 
+            this.lblEndDate.AutoSize = true;
+            this.lblEndDate.Location = new System.Drawing.Point(35, 51);
+            this.lblEndDate.Name = "lblEndDate";
+            this.lblEndDate.Size = new System.Drawing.Size(26, 13);
+            this.lblEndDate.TabIndex = 10;
+            this.lblEndDate.Text = "End";
+            // 
+            // dtpEnd
+            // 
+            this.dtpEnd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpEnd.Location = new System.Drawing.Point(80, 45);
+            this.dtpEnd.Name = "dtpEnd";
+            this.dtpEnd.Size = new System.Drawing.Size(103, 20);
+            this.dtpEnd.TabIndex = 9;
             // 
             // ucVolunteerList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.gbxDateRange);
+            this.Controls.Add(this.chkDateFilter);
+            this.Controls.Add(this.lblProject);
+            this.Controls.Add(this.cboProject);
             this.Controls.Add(this.dgvVolunteer);
             this.Controls.Add(this.chkActive);
             this.Controls.Add(this.lblOrganization);
@@ -283,6 +375,8 @@
             this.Size = new System.Drawing.Size(896, 449);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVolunteer)).EndInit();
             this.cmVolunteer.ResumeLayout(false);
+            this.gbxDateRange.ResumeLayout(false);
+            this.gbxDateRange.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,5 +407,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOrganizationName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colLastVolunteerDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colProjectHours;
+        private System.Windows.Forms.ComboBox cboProject;
+        private System.Windows.Forms.Label lblProject;
+        private System.Windows.Forms.DateTimePicker dtpStart;
+        private System.Windows.Forms.CheckBox chkDateFilter;
+        private System.Windows.Forms.GroupBox gbxDateRange;
+        private System.Windows.Forms.Label lblEndDate;
+        private System.Windows.Forms.DateTimePicker dtpEnd;
+        private System.Windows.Forms.Label lblStartDate;
     }
 }
