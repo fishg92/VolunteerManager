@@ -51,7 +51,7 @@ namespace VolunteerManager
 
             VmData.GetWorkDayDetails(_pkWorkDay, out project, out dWorkDate, out workDesc, out comments, out lunchfkOrganization);
             WorkDate = dWorkDate;
-            fkBuildProject = project;
+            FkBuildProject = project;
             WorkDescription = workDesc;
             Comments = comments;
             LunchfkOrganization = lunchfkOrganization;
@@ -141,7 +141,7 @@ namespace VolunteerManager
         {
             if (_pkWorkDay == -1)
             {
-                _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, fkBuildProject, WorkDate, "", "", LunchfkOrganization);
+                _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, FkBuildProject, WorkDate, "", "", LunchfkOrganization);
             }
 
             List<int> removeList = new List<int>();
@@ -191,7 +191,7 @@ namespace VolunteerManager
             {
                 if (_pkWorkDay == -1)
                 {
-                    _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, (int)cboProject.SelectedValue, WorkDate, "", "", LunchfkOrganization);
+                    _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, FkBuildProject, WorkDate, "", "", LunchfkOrganization);
                 }
 
                 VmData.AddVolunteerWorkDay(_pkWorkDay, fVol.PkVolunteer);
@@ -206,7 +206,7 @@ namespace VolunteerManager
         {
             if (_pkWorkDay == -1)
             {
-                _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, (int)cboProject.SelectedValue, WorkDate, "", "",LunchfkOrganization);
+                _pkWorkDay = VmData.SaveWorkDay(_pkWorkDay, FkBuildProject, WorkDate, "", "",LunchfkOrganization);
             }
 
             List<int> removeList = new List<int>();
@@ -246,62 +246,32 @@ namespace VolunteerManager
 
         public DateTime WorkDate
         {
-            get
-            {
-                return dtpDate.Value;
-            }
-            set
-            {
-                dtpDate.Value = value;
-            }
+            get => dtpDate.Value;
+            set => dtpDate.Value = value;
         }
 
-        public int fkBuildProject
+        public int FkBuildProject
         {
-            get
-            {
-                return Convert.ToInt32(cboProject.SelectedValue);
-            }
-            set
-            {
-                CommonFunctions.SetComboBoxValue(cboProject, value);
-            }
+            get => Convert.ToInt32(cboProject.SelectedValue);
+            set => CommonFunctions.SetComboBoxValue(cboProject, value);
         }
 
         public int LunchfkOrganization
         {
-            get
-            {
-                return Convert.ToInt32(cboLunch.SelectedValue);
-            }
-            set
-            {
-                CommonFunctions.SetComboBoxValue(cboLunch, value);
-            }
+            get => Convert.ToInt32(cboLunch.SelectedValue);
+            set => CommonFunctions.SetComboBoxValue(cboLunch, value);
         }
 
         public string WorkDescription
         {
-            get
-            {
-                return txtWorkDescription.Text.Trim();
-            }
-            set
-            {
-                txtWorkDescription.Text = value;
-            }
+            get => txtWorkDescription.Text.Trim();
+            set => txtWorkDescription.Text = value;
         }
 
         public string Comments
         {
-            get
-            {
-                return txtComments.Text.Trim();
-            }
-            set
-            {
-                txtComments.Text = value;
-            }
+            get => txtComments.Text.Trim();
+            set => txtComments.Text = value;
         }
 
         private void dgvAvailableVolunteer_DoubleClick(object sender, EventArgs e)
@@ -320,7 +290,7 @@ namespace VolunteerManager
             //Don't save a blank work day
             if (_pkWorkDay != -1 || txtComments.Text.Trim().Length >0)
             {
-                VmData.SaveWorkDay(_pkWorkDay, fkBuildProject, WorkDate, WorkDescription, Comments,LunchfkOrganization);
+                VmData.SaveWorkDay(_pkWorkDay, FkBuildProject, WorkDate, WorkDescription, Comments,LunchfkOrganization);
             }
         }
 
