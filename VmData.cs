@@ -147,7 +147,7 @@ namespace VolunteerManager
 
             foreach (DataRow dr in dsProject.Tables[0].Rows)
             {
-                retList.Add(new BuildProject {pkBuildProject = Convert.ToDecimal(dr["pkBuildProject"]),ProjectName = dr["ProjectName"].ToString()});
+                retList.Add(new BuildProject {pkBuildProject = Convert.ToInt32(dr["pkBuildProject"]),ProjectName = dr["ProjectName"].ToString()});
             }
 
             if (includeAll)

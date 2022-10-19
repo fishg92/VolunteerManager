@@ -57,9 +57,9 @@
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.chkDateFilter = new System.Windows.Forms.CheckBox();
             this.gbxDateRange = new System.Windows.Forms.GroupBox();
-            this.lblStartDate = new System.Windows.Forms.Label();
             this.lblEndDate = new System.Windows.Forms.Label();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
+            this.lblStartDate = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvVolunteer)).BeginInit();
             this.cmVolunteer.SuspendLayout();
             this.gbxDateRange.SuspendLayout();
@@ -289,6 +289,7 @@
             this.cboProject.Size = new System.Drawing.Size(231, 21);
             this.cboProject.TabIndex = 5;
             this.cboProject.ValueMember = "pkBuildProject";
+            this.cboProject.SelectedIndexChanged += new System.EventHandler(this.cboProject_SelectedIndexChanged);
             // 
             // lblProject
             // 
@@ -332,15 +333,6 @@
             this.gbxDateRange.Text = "Date Range";
             this.gbxDateRange.Visible = false;
             // 
-            // lblStartDate
-            // 
-            this.lblStartDate.AutoSize = true;
-            this.lblStartDate.Location = new System.Drawing.Point(32, 25);
-            this.lblStartDate.Name = "lblStartDate";
-            this.lblStartDate.Size = new System.Drawing.Size(29, 13);
-            this.lblStartDate.TabIndex = 8;
-            this.lblStartDate.Text = "Start";
-            // 
             // lblEndDate
             // 
             this.lblEndDate.AutoSize = true;
@@ -357,6 +349,15 @@
             this.dtpEnd.Name = "dtpEnd";
             this.dtpEnd.Size = new System.Drawing.Size(103, 20);
             this.dtpEnd.TabIndex = 9;
+            // 
+            // lblStartDate
+            // 
+            this.lblStartDate.AutoSize = true;
+            this.lblStartDate.Location = new System.Drawing.Point(32, 25);
+            this.lblStartDate.Name = "lblStartDate";
+            this.lblStartDate.Size = new System.Drawing.Size(29, 13);
+            this.lblStartDate.TabIndex = 8;
+            this.lblStartDate.Text = "Start";
             // 
             // ucVolunteerList
             // 

@@ -5,13 +5,16 @@ namespace VolunteerManager
 {
     public partial class ucVolunteerList : UserControl
     {
+        private bool _filling = true;
+
         public ucVolunteerList()
         {
             InitializeComponent();
             FillOrganizations();
-            cboOrganization.SelectedIndex = 0;
             FillProjects();
+            cboOrganization.SelectedIndex = 0;
             cboProject.SelectedIndex = 0;
+            _filling = false;
             FillData();
         }
 
@@ -27,7 +30,7 @@ namespace VolunteerManager
 
         public void FillData()
         {
-            dgvVolunteer.DataSource = VmData.VolunteerList(pkOrganization, -1, chkActive.Checked).Tables[0];
+            dgvVolunteer.DataSource = VmData.VolunteerList(pkOrganization, pkBuildProject, chkActive.Checked).Tables[0];
         }
 
         private int pkOrganization
@@ -38,9 +41,19 @@ namespace VolunteerManager
             }
         }
 
+        private int pkBuildProject
+        {
+            get
+            {
+
+                return (int)cboProject.SelectedValue;
+            }
+        }
+
         private void cboOrganization_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FillData();
+            if(!_filling)
+                FillData();
         }
 
         private void dgvVolunteer_SelectionChanged(object sender, EventArgs e)
@@ -157,6 +170,13 @@ namespace VolunteerManager
         private void chkDateFilter_CheckedChanged(object sender, EventArgs e)
         {
             gbxDateRange.Visible = chkDateFilter.Checked;
+        }
+
+        private void cboProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_filling)
+                FillData();
+
         }
     }
 }

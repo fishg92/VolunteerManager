@@ -7,13 +7,13 @@ namespace VolunteerManager
 {
     public class BuildProject:IListItem
     {
-        public decimal pkBuildProject { get; set; }
+        public int pkBuildProject { get; set; }
         public string ProjectName { get; set; }
 
         public string ItemValue
         {
             get { return pkBuildProject.ToString(); }
-            set { pkBuildProject = Convert.ToDecimal(value); }
+            set { pkBuildProject = Convert.ToInt32(value); }
         }
 
         public string ItemDisplay
